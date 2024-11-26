@@ -80,7 +80,8 @@ test.describe("To-Do List", () => {
         const newTodoInput = page.locator("#input-add")
         const addBtn = page.locator("#add-btn")
         const taskList = page.locator("#panel .todo-item")
-        const strikeTask = page.locator(".mr-auto span").last()
+        const strikeTask = page.locator("svg.svg-inline--fa.fa-circle-check ")
+        const strikeTaskArr = await strikeTask.all()
         const visibleTask = page.locator(".mr-auto span").first()
         const strikeTaskCount = await strikeTask.count()
         const taskCount = await taskList.count()
@@ -101,18 +102,26 @@ test.describe("To-Do List", () => {
         })
 
         await test.step("Mark all the tasks as completed by clicking on them.", async () => {
-            for (let i = 0; i < strikeTaskCount; i++){
-                await strikeTask.nth(i).click()
-            }
+            // for (let i = 0; i <= strikeTaskCount; i++){
+            //     await strikeTask.nth(i).click()
+            // }
+            // for (const task of strikeTaskArr){
+            //     await task.click()
+            // }
+            await strikeTask.nth(0).click()
+            await strikeTask.nth(1).click()
+            await strikeTask.nth(2).click()
+            await strikeTask.nth(3).click()
+            await strikeTask.nth(4).click()
         })
 
-        // await test.step("Click on the “Remove completed tasks!” button to clear them.", async () => {
-        //     await strikeTask.click()
-        // })
+        await test.step("Click on the “Remove completed tasks!” button to clear them.", async () => {
+            await rmvBtn.click()
+        })
 
-        // await test.step("Validate that the task list is empty, displaying the message “No tasks found!”.", async () => {
-        //     await expect(emptyTaskList).toHaveText("No tasks found!")
-        // })
+        await test.step("Validate that the task list is empty, displaying the message “No tasks found!”.", async () => {
+            await expect(emptyTaskList).toHaveText("No tasks found!")
+        })
     })
 
     test("Search and Filter Functionality in todo App", async ({ page }) => {
