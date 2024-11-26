@@ -41,8 +41,8 @@ test.describe("To-Do List", () => {
         const newTodoInput = page.locator("#input-add")
         const addBtn = page.locator("#add-btn")
         const taskList = page.locator("#panel .todo-item")
-        const strikeTask = page.locator(".mr-auto span").nth(1)
-        const visibleTask = page.locator(".mr-auto span").nth(0)
+        const strikeTask = page.locator(".mr-auto span").last()
+        const visibleTask = page.locator(".mr-auto span").first()
         const rmvBtn = page.locator("#clear")
         const emptyTaskList = page.locator(".todo-item")
 
@@ -80,8 +80,9 @@ test.describe("To-Do List", () => {
         const newTodoInput = page.locator("#input-add")
         const addBtn = page.locator("#add-btn")
         const taskList = page.locator("#panel .todo-item")
-        const strikeTask = page.locator(".mr-auto span").nth(1)
-        const visibleTask = page.locator(".mr-auto span").nth(0)
+        const strikeTask = page.locator(".mr-auto span").last()
+        const visibleTask = page.locator(".mr-auto span").first()
+        const strikeTaskCount = await strikeTask.count()
         const taskCount = await taskList.count()
         const rmvBtn = page.locator("#clear")
         const emptyTaskList = page.locator(".todo-item")
@@ -100,8 +101,8 @@ test.describe("To-Do List", () => {
         })
 
         await test.step("Mark all the tasks as completed by clicking on them.", async () => {
-            for (let i = 0; i < taskCount; i++){
-                await taskList.nth(i).click()
+            for (let i = 0; i < strikeTaskCount; i++){
+                await strikeTask.nth(i).click()
             }
         })
 
@@ -110,7 +111,7 @@ test.describe("To-Do List", () => {
         // })
 
         // await test.step("Validate that the task list is empty, displaying the message “No tasks found!”.", async () => {
-        //     await expect(visibleTask).toHaveClass("panel-icon has-text-success")
+        //     await expect(emptyTaskList).toHaveText("No tasks found!")
         // })
     })
 
